@@ -1,0 +1,9 @@
+docling
+docling-core
+pillow
+python-dotenv
+langchain-text-splitters
+langchain-community
+langchain-core
+langchain-google-genai
+faiss-cpu
