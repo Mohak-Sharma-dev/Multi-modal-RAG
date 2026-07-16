@@ -1,8 +1,7 @@
 {
   "functions": {
     "api/**/*.ts": {
-      "maxDuration": 30,
-      "runtime": "nodejs22.x"
+      "maxDuration": 30
     }
   },
   "routes": [
