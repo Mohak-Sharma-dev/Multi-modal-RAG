@@ -12,6 +12,14 @@
     { "src": "/api/(.*)", "dest": "/api/$1" },
     { "src": "/(.*)", "dest": "/public/$1" }
   ],
+  "headers": [
+    {
+      "source": "/(.*)\\.js",
+      "headers": [
+        { "key": "Content-Type", "value": "application/javascript; charset=utf-8" }
+      ]
+    }
+  ],
   "regions": ["iad1"],
   "env": {
     "GEMINI_API_KEY": "",
