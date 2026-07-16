@@ -39,7 +39,7 @@ function getTimestamp() {
 }
 
 function escapeHtml(str) {
-  return String(str).replace(/[&<>"']/g, s => ({'&':'&','<':'<','>':'>','"':'"',"'":'''}[s]));
+  return String(str).replace(/[&<>"']/g, s => ({'&':'&','<':'<','>':'>','"':'"',"'":''}[s]));
 }
 
 function formatSize(bytes) {
