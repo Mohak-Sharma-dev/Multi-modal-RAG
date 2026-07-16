@@ -11,9 +11,9 @@
   ],
   "regions": ["iad1"],
   "env": {
-    "GEMINI_API_KEY": "@gemini_api_key",
-    "UPSTASH_REDIS_REST_URL": "@upstash_redis_rest_url",
-    "UPSTASH_REDIS_REST_TOKEN": "@upstash_redis_rest_token",
+    "GEMINI_API_KEY": "",
+    "UPSTASH_REDIS_REST_URL": "",
+    "UPSTASH_REDIS_REST_TOKEN": "",
     "INDEX_NAME": "rag_vectors"
   }
 }
