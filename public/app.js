@@ -630,8 +630,8 @@ function init() {
   console.log('%c Try: Upload PDF/TXT/Image → Set Policy → Ingest → Switch Identity → Query', 'color: #d46b08; font-family: monospace;');
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', init);
-} else {
-  init();
-}
+// if (document.readyState === 'loading') {
+//   document.addEventListener('DOMContentLoaded', init);
+// } else {
+//   init();
+// }
