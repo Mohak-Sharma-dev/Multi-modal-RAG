@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "vercel dev",
+    "dev": "echo 'Use: npx vercel dev'",
     "build": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
     "lint": "echo 'No linter configured'"

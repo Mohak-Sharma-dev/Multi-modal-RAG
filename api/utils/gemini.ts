@@ -1,6 +1,10 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+const apiKey = process.env.GEMINI_API_KEY;
+if (!apiKey) {
+  console.error('[Gemini] GEMINI_API_KEY not set in environment');
+}
+const genAI = new GoogleGenerativeAI(apiKey || '');
 const GENERATION_MODEL = 'gemini-1.5-flash';
 
 export interface GenerationOptions {
@@ -14,7 +18,14 @@ export async function generateContent(
   prompt: string,
   options: GenerationOptions = {}
 ): Promise<string> {
+  if (!apiKey) {
+    throw new Error('GEMINI_API_KEY not configured');
+  }
+  
   const model = genAI.getGenerativeModel({ model: GENERATION_MODEL });
+  
+  console.log('[Gemini] Generating content with model:', GENERATION_MODEL);
+  console.log('[Gemini] Prompt length:', prompt.length);
   
   const result = await model.generateContent({
     contents: [{ role: 'user', parts: [{ text: prompt }] }],
@@ -27,7 +38,9 @@ export async function generateContent(
   });
 
   const response = result.response;
-  return response.text();
+  const text = response.text();
+  console.log('[Gemini] Response length:', text.length);
+  return text;
 }
 
 export async function generateImageDescription(base64Image: string): Promise<string> {
