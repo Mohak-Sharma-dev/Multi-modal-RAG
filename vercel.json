@@ -8,10 +8,6 @@
       "maxDuration": 30
     }
   },
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1" },
-    { "src": "/(.*)", "dest": "/public/$1" }
-  ],
   "cleanUrls": true,
   "builds": [
     {
@@ -29,7 +25,9 @@
   ],
   "routes": [
     { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/index.html" }
+    { "src": "/(.*)", "dest": "/index.html" },
+    { "src": "/api/(.*)", "dest": "/api/$1" }
+
   ],
 
   "regions": ["iad1"],
