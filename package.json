@@ -1,0 +1,27 @@
+{
+  "name": "multi-modal-rag",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "lint": "echo 'No linter configured'"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.15.0",
+    "@upstash/redis": "^1.34.0",
+    "pdf-parse": "^1.1.1",
+    "formidable": "^3.5.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "@types/node": "^22.0.0",
+    "@types/pdf-parse": "^1.1.4",
+    "@types/formidable": "^3.4.5",
+    "vercel": "^37.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

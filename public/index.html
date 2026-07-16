@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SpiceDB Arrakis RAG Terminal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="terminal-shell">
+    <header class="header-panel" role="banner">
+      <h1 class="header-title">SPICEVAULT TERMINAL // ARRAKIS RAG NODE</h1>
+      <div class="identity-selector">
+        <span class="identity-label">Active Identity:</span>
+        <div class="identity-options" role="radiogroup" aria-label="Select active user identity">
+          <label class="identity-option">
+            <input type="radio" name="identity" value="paul" checked aria-label="Paul Atreides - Fremen">
+            <span class="identity-btn">
+              Paul Atreides
+              <span class="role-badge role-fremen">Fremen</span>
+            </span>
+          </label>
+          <label class="identity-option">
+            <input type="radio" name="identity" value="gurney" aria-label="Gurney Halleck - Smuggler">
+            <span class="identity-btn">
+              Gurney Halleck
+              <span class="role-badge role-smuggler">Smuggler</span>
+            </span>
+          </label>
+          <label class="identity-option">
+            <input type="radio" name="identity" value="harkonnen" aria-label="Harkonnen Agent - Imperial Spy">
+            <span class="identity-btn">
+              Harkonnen Agent
+              <span class="role-badge role-spy">Imperial Spy</span>
+            </span>
+          </label>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-grid" role="main">
+      <section class="panel" aria-labelledby="upload-title">
+        <div class="panel-header">
+          <h2 class="panel-title" id="upload-title">INGESTION CHAMBER</h2>
+        </div>
+        <div class="panel-body">
+          <div class="upload-zone" id="uploadZone" role="region" aria-label="File upload area" tabindex="0">
+            <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            <p class="upload-text">Drag & drop or click to upload</p>
+            <p class="upload-hint">Accepted: .pdf, .png, .jpg, .jpeg, .txt (Max 5MB)</p>
+            <input type="file" id="fileInput" accept=".pdf,.png,.jpg,.jpeg,.txt" hidden aria-label="Choose file to upload">
+          </div>
+
+          <div class="file-preview" id="filePreview" aria-live="polite">
+            <img class="preview-thumb" id="previewThumb" alt="File preview" hidden>
+            <div class="preview-info">
+              <span class="preview-name" id="previewName"></span>
+              <span class="preview-size" id="previewSize"></span>
+            </div>
+          </div>
+
+          <div class="policy-selector">
+            <span class="policy-label">Assign Access Policy</span>
+            <select class="policy-select" id="policySelect" aria-label="Select access policy for uploaded file">
+              <option value="public">Public — Open to all</option>
+              <option value="sietch_secret">Sietch Secret — Fremen only</option>
+              <option value="imperial_classified">Imperial Classified — No access</option>
+            </select>
+          </div>
+
+          <button class="ingest-btn" id="ingestBtn" disabled aria-label="Ingest file to Spice Vault">
+            <span>Ingest to Spice Vault</span>
+          </button>
+
+          <div class="progress-container" id="progressContainer" aria-live="polite" hidden>
+            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p class="progress-text" id="progressText">The spice must flow... indexing into Sietch Tabr archives...</p>
+          </div>
+
+          <div class="tuple-store" aria-labelledby="tuple-store-title" role="region" aria-label="SpiceDB tuple store log">
+            <div class="tuple-store-header">
+              <span class="tuple-store-title" id="tuple-store-title">SPICEDB TUPLE STORE</span>
+              <button class="tuple-store-clear" id="clearTupleLog" aria-label="Clear tuple log">CLEAR LOG</button>
+            </div>
+            <div class="tuple-log" id="tupleLog" role="log" aria-live="polite" aria-label="Written tuples">
+              <div class="tuple-entry write">
+                <span class="tuple-timestamp">[--:--:--.--]</span>
+                <span class="tuple-action">SYSTEM READY</span>
+                <span class="tuple-detail">Awaiting ingestion... tuples will appear here</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel query-panel disabled" id="queryPanel" aria-labelledby="query-title" style="display: flex; flex-direction: column;">
+        <div class="panel-header">
+          <h2 class="panel-title" id="query-title">ORACLE CONSULTATION</h2>
+        </div>
+        <div class="panel-body" style="flex: 1; display: flex; flex-direction: column; min-height: 0; position: relative;">
+
+          <div class="lock-overlay" aria-hidden="true">
+            <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            <span class="lock-text">ORACLE DORMANT</span>
+            <span class="lock-hint">Ingest a file to awaken</span>
+          </div>
+
+          <form class="query-form" id="queryForm" style="flex: 1; display: flex; flex-direction: column; min-height: 0;">
+            <div class="query-input-wrapper">
+              <textarea
+                class="query-input"
+                id="queryInput"
+                placeholder="What do you seek, outworlder?"
+                aria-label="Enter your query for the Oracle"
+                rows="5"
+              ></textarea>
+            </div>
+            <button type="submit" class="consult-btn" id="consultBtn" aria-label="Consult the Oracle">
+              <span>Consult the Oracle</span>
+              <svg class="crysknife-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M12 2L10 20H14L12 2Z"/>
+                <path d="M8 10H16M8 14H16"/>
+              </svg>
+            </button>
+          </form>
+
+          <div class="panel-tabs" role="tablist" aria-label="View selection" style="margin-top: 1rem;">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="chatPanel" id="chatTab" tabindex="0">Chat Log</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="auditPanel" id="auditTab" tabindex="-1">SpiceDB Audit Feed</button>
+          </div>
+
+          <div class="tab-panel active" id="chatPanel" role="tabpanel" aria-labelledby="chatTab" style="flex: 1; min-height: 0; margin-top: 1rem; display: flex; flex-direction: column;">
+            <div class="chat-log" id="chatLog" role="log" aria-live="polite" aria-label="Chat history" style="flex: 1; overflow-y: auto;"></div>
+          </div>
+
+          <div class="tab-panel" id="auditPanel" role="tabpanel" aria-labelledby="auditTab" style="flex: 1; min-height: 0; margin-top: 1rem; display: flex; flex-direction: column;">
+            <div class="audit-log" id="auditLog" role="log" aria-live="polite" aria-label="SpiceDB audit log" style="flex: 1; overflow-y: auto;"></div>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="panel auth-log-panel" aria-labelledby="auth-title">
+        <div class="panel-header">
+          <h2 class="panel-title" id="auth-title">SPICEDB AUTH LOG</h2>
+        </div>
+        <div class="panel-body" style="flex: 1; display: flex; flex-direction: column; min-height: 0;">
+          <div class="auth-log-header">
+            <span class="auth-log-title">LIVE AUTHORIZATION CHECKS</span>
+            <div class="auth-log-filter">
+              <button class="auth-log-filter-btn active" data-filter="all" aria-pressed="true">ALL</button>
+              <button class="auth-log-filter-btn" data-filter="allowed" aria-pressed="false">ALLOWED</button>
+              <button class="auth-log-filter-btn" data-filter="denied" aria-pressed="false">DENIED</button>
+            </div>
+          </div>
+          <div class="auth-log" id="authLog" role="log" aria-live="polite" aria-label="Live authorization decisions" style="flex: 1; overflow-y: auto;">
+            <div class="auth-entry write">
+              <span class="auth-timestamp">[--:--:--.--]</span>
+              <span class="auth-action">SYSTEM</span>
+              <span class="auth-detail">Awaiting authorization checks...</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+      POWERED BY THE WEIRDING WAY & SPICEDB AUTHZ — ARRAKIS RAG V.0.2.0
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
