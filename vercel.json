@@ -2,7 +2,7 @@
   "functions": {
     "api/**/*.ts": {
       "maxDuration": 30,
-      "runtime": "nodejs20"
+      "runtime": "nodejs22.x"
     }
   },
   "routes": [
