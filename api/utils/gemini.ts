@@ -5,7 +5,7 @@ if (!apiKey) {
   console.error('[Gemini] GEMINI_API_KEY not set in environment');
 }
 const genAI = new GoogleGenerativeAI(apiKey || '');
-const GENERATION_MODEL = 'gemini-1.5-flash';
+const GENERATION_MODEL = 'gemini-2.5-flash';
 
 export interface GenerationOptions {
   temperature?: number;

@@ -5,7 +5,7 @@ if (!apiKey) {
   console.error('[Embeddings] GEMINI_API_KEY not set in environment');
 }
 const genAI = new GoogleGenerativeAI(apiKey || '');
-const EMBEDDING_MODEL = 'text-embedding-004';
+const EMBEDDING_MODEL = 'gemini-embedding-001';
 const EMBEDDING_DIMENSIONS = 768;
 
 export async function generateEmbedding(text: string): Promise<number[]> {

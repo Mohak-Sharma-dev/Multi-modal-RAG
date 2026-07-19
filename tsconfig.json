@@ -20,7 +20,8 @@
   },
   "include": [
     "api/**/*",
-    "public/**/*"
+    "public/**/*",
+    "server.ts"
   ],
   "exclude": [
     "node_modules",

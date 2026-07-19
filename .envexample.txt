@@ -1,7 +1,0 @@
-GEMINI_API_KEY=
-GROQ_API_KEY=
-MODEL=gemini-3.1-flash-lite
-EMBEDDINGS_MODEL=gemini-embedding-001
-SOURCEPATH=source
-FILE=attention_is_all_you_need.pdf
-DESTPATH=result

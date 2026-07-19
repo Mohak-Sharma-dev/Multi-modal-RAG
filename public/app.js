@@ -16,7 +16,9 @@ const gameState = {
   pendingFile: null,
   fileLedger: [],
   authLogFilter: 'all',
-  elements: {}
+  elements: {},
+  lastFileId: null,
+  lastPolicy: null
 };
 
 const POLICY_DISPLAY = {
@@ -283,6 +285,10 @@ async function ingestFile() {
 
     enableQueryPanel();
 
+    // Store last ingested file for queries
+    gameState.lastFileId = result.fileId;
+    gameState.lastPolicy = policy;
+
     logTupleEntry({
       type: 'WriteTuple',
       user: getCurrentUserName(),
@@ -350,12 +356,14 @@ async function ingestFile() {
 
 async function processQuery(query) {
   const identity = gameState.currentIdentity;
+  const fileId = gameState.lastFileId;
+  const policy = gameState.lastPolicy;
   
   try {
     const response = await fetch('/api/query', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query, identity })
+      body: JSON.stringify({ query, identity, fileId, policy })
     });
 
     const data = await response.json();

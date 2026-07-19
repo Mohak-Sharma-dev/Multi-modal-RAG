@@ -1,0 +1,14 @@
+node_modules
+dist
+.vector-index
+data
+.env
+.env.local
+.git
+.gitignore
+*.log
+.DS_Store
+*.md
+!README.md
+Dockerfile
+docker-compose.yml
